@@ -4,6 +4,11 @@ export class TaskService {
   constructor() {
     this.taskModel = Task;
   }
+
+  async getTaskById(taskId) {
+    return await this.taskModel.findById(taskId);
+  }
+
   async getTasks() {
     return await this.taskModel.find();
   }

@@ -24,8 +24,20 @@ export class BotService {
     const createdTasks = await this.taskModel.insertMany(selectedTasks);
     const taskIds = createdTasks.map((task) => task._id);
 
-    const bot = await Bot.create({ name, tasks: taskIds });
+    const bot = await this.botModel.create({ name, tasks: taskIds });
 
-    return await Bot.findById(bot._id).populate("tasks");
+    return await this.botModel.findById(bot._id).populate("tasks");
+  }
+  async deleteBot(botId) {
+    const bot = await this.botModel.findById(botId);
+    if (!bot) {
+      throw new Error("Bot not found");
+    }
+
+    await this.taskModel.deleteMany({ _id: { $in: bot.tasks } });
+
+    await this.botModel.findByIdAndDelete(botId);
+
+    return { message: "Bot and related tasks deleted successfully" };
   }
 }
