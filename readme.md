@@ -22,7 +22,7 @@ This is the backend for the Bookkeeping Automation project, designed to manage b
 
 ### **1️⃣ Clone the repository**
 
-git clone https://github.com/your-username/bookkeeping-automation.git
+git clone https://github.com/OleksiiMakoveiTeam/bookkeeping-be.git
 cd backend
 
 ### **2️⃣ Install dependencies**
