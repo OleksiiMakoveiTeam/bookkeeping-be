@@ -1,14 +1,16 @@
 import { Agenda } from "agenda";
 import { mongoDbUri } from "../utils/consts.js";
+import { broadcastTaskCompletion } from "../config/websocket.js";
 import Task from "../api/models/task.model.js";
+import Bot from "../api/models/bot.model.js";
 
 const agenda = new Agenda({
   db: { address: mongoDbUri },
   processEvery: "10 seconds",
 });
 
-agenda.on("ready", () => console.log("✅ Agenda.js is connected and ready!"));
-agenda.on("error", (error) => console.error("❌ Agenda.js error:", error));
+agenda.on("ready", () => console.log("Agenda.js is connected and ready!"));
+agenda.on("error", (error) => console.error("Agenda.js error:", error));
 
 agenda.define("execute task", async (job) => {
   const { taskId } = job.attrs.data;
@@ -25,6 +27,18 @@ agenda.define("execute task", async (job) => {
   await task.save();
 
   console.log(`✅ Task Completed: ${task.description}`);
+
+  // small hack to get the bot id here, i could put it from the controller in a more elegant way
+  const bot = await Bot.findOne({ tasks: task._id });
+
+  // Sending message to the client
+  broadcastTaskCompletion({
+    _id: task._id,
+    description: task.description,
+    botId: bot ? bot._id : null,
+    completed: true,
+    completedAt: task.completedAt,
+  });
 });
 
 export async function startAgenda() {

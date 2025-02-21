@@ -17,7 +17,7 @@ app.use("/api/tasks", taskRoutes);
 startAgenda();
 setupSwagger(app);
 
-app.get("/", (req, res) => {
+app.get("/", (_req, res) => {
   res.send("📌 Bookkeeping Bot API is Running...");
 });
 

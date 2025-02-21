@@ -1,5 +1,8 @@
 import express from "express";
-import { createBotSchema } from "../validations/bot.validation.js";
+import {
+  createBotSchema,
+  deleteBotSchema,
+} from "../validations/bot.validation.js";
 import { BotController } from "../controllers/bot.controller.js";
 import { validateRequest } from "../../middlewares/validateRequest.js";
 import { asyncHandler } from "../../middlewares/asyncHandler.js";
@@ -82,6 +85,36 @@ router.post(
   "/",
   validateRequest(createBotSchema),
   asyncHandler(botController.createBot),
+);
+
+/**
+ * @swagger
+ * /api/bots/{id}:
+ *   delete:
+ *     summary: Delete a bot by ID
+ *     description: Deletes a bot and all associated tasks
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: The unique ID of the bot
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Bot and associated tasks deleted successfully
+ *       400:
+ *         description: Invalid bot ID format
+ *       404:
+ *         description: Bot not found
+ *       500:
+ *         description: Server error
+ */
+
+router.delete(
+  "/:id",
+  validateRequest(deleteBotSchema),
+  asyncHandler(botController.deleteBot),
 );
 
 export default router;
