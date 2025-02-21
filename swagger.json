@@ -1,0 +1,139 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Bookkeeping Bot API",
+    "version": "1.0.0",
+    "description": "API documentation for the Bookkeeping Bot system"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5000"
+    }
+  ],
+  "paths": {
+    "/api/bots": {
+      "get": {
+        "summary": "Get all bots",
+        "description": "Retrieve a list of all bots",
+        "responses": {
+          "200": {
+            "description": "A list of bots",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Bot"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new bot",
+        "description": "Create a bot with a specified name",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Bot created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Bot"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Bot": {
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "The auto-generated ID of the bot"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the bot"
+          },
+          "tasks": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "description": "List of task IDs assigned to the bot"
+            }
+          }
+        },
+        "example": {
+          "_id": "65123abc456def7890123456",
+          "name": "CharlieBot",
+          "tasks": [
+            "65123def456abc7890123456"
+          ]
+        }
+      },
+      "Task": {
+        "type": "object",
+        "required": [
+          "description",
+          "duration"
+        ],
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "The auto-generated ID of the task"
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the task"
+          },
+          "duration": {
+            "type": "integer",
+            "description": "Time in milliseconds before the task is completed"
+          },
+          "completed": {
+            "type": "boolean",
+            "description": "Indicates whether the task is completed"
+          },
+          "completedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Timestamp of when the task was completed"
+          }
+        },
+        "example": {
+          "_id": "65123def456abc7890123456",
+          "description": "Process Invoice",
+          "duration": 1500,
+          "completed": false,
+          "completedAt": null
+        }
+      }
+    }
+  },
+  "tags": []
+}
