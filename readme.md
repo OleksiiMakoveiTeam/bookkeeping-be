@@ -32,14 +32,14 @@ yarn
 ### **3️⃣ Setup environment variables**
 
 Create a `.env.local` file in the root folder:
-
+```
 PORT=5000
 MONGO_USERNAME=
 MONGO_PASSWORD=
 MONGO_HOST=
 MONGO_DB_NAME=
 MONGO_OPTIONS=
-
+```
 mongodb+srv://:@.mongodb.net/bookkeeping
 
 ### **4️⃣ Start the backend server**
