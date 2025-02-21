@@ -25,6 +25,35 @@ const botController = new BotController();
  */
 
 router.get("/", asyncHandler(botController.getBots));
+/**
+ * @swagger
+ * /api/bots/{id}:
+ *   get:
+ *     summary: Get a bot by ID
+ *     description: Retrieve a bot by its unique ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: The unique ID of the bot
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved bot details
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/Bot"
+ *       400:
+ *         description: Invalid bot ID format
+ *       404:
+ *         description: Bot not found
+ *       500:
+ *         description: Server error
+ */
+
+router.get("/:id", asyncHandler(botController.getBot));
 
 /**
  * @swagger

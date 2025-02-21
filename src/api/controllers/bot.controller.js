@@ -5,6 +5,10 @@ export class BotController {
     this.botService = new BotService();
   }
 
+  getBot = async (req) => {
+    const { id } = req.params;
+    return await this.botService.getBot(id);
+  };
   getBots = async () => {
     return await this.botService.getBots();
   };
