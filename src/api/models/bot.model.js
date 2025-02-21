@@ -18,12 +18,17 @@ import { model, Schema } from "mongoose";
  *         tasks:
  *           type: array
  *           items:
- *             type: string
- *             description: List of task IDs assigned to the bot
+ *             $ref: "#/components/schemas/Task"
+ *           description: List of assigned tasks
  *       example:
  *         _id: "65123abc456def7890123456"
  *         name: "CharlieBot"
- *         tasks: ["65123def456abc7890123456"]
+ *         tasks:
+ *           - _id: "65123def456abc7890123456"
+ *             description: "Process Invoice"
+ *             duration: 1500
+ *             completed: false
+ *             completedAt: null
  */
 const botSchema = new Schema(
   {

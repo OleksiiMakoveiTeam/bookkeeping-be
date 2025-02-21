@@ -22,6 +22,9 @@ export function setupSwagger(app) {
   app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
   console.log("✅ Swagger Docs available at: http://localhost:5000/api-docs");
 
+  if (process.env.NODE_ENV !== "production") {
+    return;
+  }
   const outputPath = path.resolve("./swagger.json");
   fs.writeFileSync(outputPath, JSON.stringify(swaggerDocs, null, 2));
   console.log(`📄 Swagger JSON file generated at: ${outputPath}`);

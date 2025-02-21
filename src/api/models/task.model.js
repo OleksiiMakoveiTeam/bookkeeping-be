@@ -27,6 +27,7 @@ const { Schema, model } = mongoose;
  *         completedAt:
  *           type: string
  *           format: date-time
+ *           nullable: true
  *           description: Timestamp of when the task was completed
  *       example:
  *         _id: "65123def456abc7890123456"
@@ -43,9 +44,7 @@ const taskSchema = new Schema(
     completed: { type: Boolean, default: false },
     completedAt: { type: Date, default: null },
   },
-  {
-    timestamps: true,
-  },
+  { timestamps: true },
 );
 
 const Task = model("Task", taskSchema);
