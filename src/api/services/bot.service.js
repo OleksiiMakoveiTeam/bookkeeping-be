@@ -5,6 +5,10 @@ export class BotService {
     this.botModel = Bot;
   }
 
+  async getBot(id) {
+    return await this.botModel.findById(id).populate("tasks");
+  }
+
   async getBots() {
     return await this.botModel.find().populate("tasks");
   }
