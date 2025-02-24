@@ -65,39 +65,4 @@ router.post(
   asyncHandler(taskController.createTask),
 );
 
-/**
- * @swagger
- * /api/tasks/complete:
- *   patch:
- *     summary: Mark a task as completed
- *     description: Updates a task's status to completed based on its ID.
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               taskId:
- *                 type: string
- *                 example: "65123def456abc7890123456"
- *                 description: The ID of the task to be marked as completed
- *     responses:
- *       200:
- *         description: Task marked as completed
- *         content:
- *           application/json:
- *             schema:
- *               $ref: "#/components/schemas/Task"
- *       400:
- *         description: Invalid task ID or task already completed
- *       404:
- *         description: Task not found
- */
-router.patch(
-  "/complete",
-  validateRequest(completeTaskSchema),
-  asyncHandler(taskController.markTaskAsCompleted),
-);
-
 export default router;

@@ -23,12 +23,4 @@ export class TaskService {
       duration,
     });
   }
-
-  async markTaskAsCompleted(taskId) {
-    return await this.taskModel.findByIdAndUpdate(
-      taskId,
-      { completed: true, completedAt: new Date() },
-      { new: true },
-    );
-  }
 }

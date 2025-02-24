@@ -21,9 +21,4 @@ export class TaskController {
 
     return createdTask;
   };
-
-  markTaskAsCompleted = async (req) => {
-    const { taskId } = req.body;
-    return await this.taskService.markTaskAsCompleted(taskId);
-  };
 }
