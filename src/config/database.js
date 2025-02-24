@@ -1,12 +1,22 @@
-import { mongoDbUri } from "../utils/consts.js";
 import mongoose from "mongoose";
+import { mongoDbUri } from "../utils/consts.js";
 
-await mongoose
-  .connect(mongoDbUri)
-  .then(() => {
-    console.log("🚀 Successfully connected to MongoDB");
-  })
-  .catch((error) => {
-    console.error("Error connecting to MongoDB: ", error);
+const connect = async () => {
+  const isTestEnv = process.env.NODE_ENV === "test";
+
+  const mongoUri = isTestEnv ? global.__MONGO_URI__ : mongoDbUri;
+
+  if (!mongoUri) {
+    return;
+  }
+
+  try {
+    await mongoose.connect(mongoUri);
+    console.log(`✅ Connected to ${isTestEnv ? "in-memory" : "real"} MongoDB`);
+  } catch (error) {
+    console.error("Error connecting to MongoDB:", error);
     process.exit(1);
-  });
+  }
+};
+
+export default connect;

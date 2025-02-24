@@ -8,5 +8,5 @@ export const createTaskSchema = z.object({
 });
 
 export const completeTaskSchema = z.object({
-  taskId: z.string().length(24, "Invalid Task ID format"),
+  taskId: z.string(),
 });

@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import botRoutes from "./api/routes/bot.routes.js";
 import taskRoutes from "./api/routes/task.routes.js";
-import "./config/database.js";
+import connect from "./config/database.js";
 import { startAgenda } from "./config/agenda.js";
 import { setupSwagger } from "./config/swaggerConfig.js";
 
@@ -14,6 +14,7 @@ app.use(cors());
 app.use("/api/bots", botRoutes);
 app.use("/api/tasks", taskRoutes);
 
+connect();
 startAgenda();
 setupSwagger(app);
 

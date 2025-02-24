@@ -1,8 +1,8 @@
 import { WebSocketServer } from "ws";
 
-let wss;
+let wss = null;
 
-export const setupWebSocket = (server) => {
+export const setupWebSocket = () => {
   wss = new WebSocketServer({ port: 8080 });
   console.log("WebSocket Server is running");
 
@@ -16,15 +16,19 @@ export const setupWebSocket = (server) => {
 };
 
 export const broadcastTaskCompletion = (task) => {
-  if (!wss) return;
+  if (process.env.NODE_ENV !== "test" && !wss)
+    return console.error("❌ WebSocket Server is Not Initialized");
 
   const message = JSON.stringify({ type: "TASK_COMPLETED", task });
 
+  console.log("📡 Broadcasting Message to Clients:", message);
+
   wss.clients.forEach((client) => {
-    if (client.readyState === 1) {
+    if (client.readyState === WebSocket.OPEN) {
+      console.log("📨 Sending Message to Client...");
       client.send(message);
+    } else {
+      console.warn("⚠️ Client is not ready, skipping...");
     }
   });
-
-  console.log("WebSocket: Sent task completion notification", message);
 };
